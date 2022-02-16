@@ -30,18 +30,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
   #creating a user
-  if (!empty($name) && !empty($email) && !empty($password)  && empty($confirmErr)) {
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    $query = "INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$hashed_password')";
-    $result = mysqli_query($conn, $query);
-    if ($result) {
-      $message = "User created successfully";
-    } else {
-      $message = "Error creating user";
-    }
 
-    $conn->close();
+  if (!empty($name) && !empty($email) && !empty($password)  && empty($confirmErr)) {
+    if (check_if_email_exists($email, $conn)) {
+      $message = "Email already exists";
+    } else {
+      $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+      $query = "INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$hashed_password')";
+      $result = mysqli_query($conn, $query);
+      if ($result) {
+        setcookie("user", base64_encode($email . '|' . $password), time() + (86400 * 30), "/");
+        header("Location: index.php");
+      } else {
+        $message = "Error creating user";
+      }
+      $conn->close();
+    }
   }
+}
+
+function check_if_email_exists($email, $conn)
+{
+  $query = "SELECT * FROM users WHERE email='$email'";
+  $result = mysqli_query($conn, $query);
+  if ($result->num_rows > 0) {
+    return TRUE;
+  }
+  return FALSE;
 }
 
 function test_input($data)
@@ -52,6 +67,7 @@ function test_input($data)
   return $data;
 }
 ?>
+<html>
 
 <head>
   <meta charset="UTF-8">
@@ -63,6 +79,12 @@ function test_input($data)
   <div class="rounded-xl shadow p-4 px-8 flex flex-col items-center">
 
     <h1 class="text-3xl font-bold">Signup</h1>
+    <?php if ($message) : ?>
+      <span class="bg-yellow-300 border border-yellow-400 py-3 px-2 w-full bg-opacity-50 rounded-md text-yellow-900 my-2">
+        <?= $message ?>
+      </span>
+    <?php endif ?>
+
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="space-y-2">
       <span class="flex flex-col items-start">
         <label for="name" class="text-sm text-slate-500">Name:</label>
@@ -92,6 +114,7 @@ function test_input($data)
       <button class="rounded-md p-2 px-8 font-bold text-white bg-blue-500 w-full" name="submit">Submit</button>
     </form>
     <span class="text-sm text-center">Have an account? <a href="/login.php" class="text-blue-800 underline">Login</a></span>
-    <span><?php echo $message; ?></span>
   </div>
 </body>
+
+</html>
