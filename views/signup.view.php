@@ -1,9 +1,10 @@
-<html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
+  <title>Signup</title>
 </head>
 
 <body class="flex items-center justify-center min-h-screen">
@@ -21,7 +22,7 @@
         <label for="name" class="text-sm text-slate-500">Name:</label>
         <input class="border border-slate-300 rounded-md p-2" type="name" name="name" required>
         <?php if (isset($errors["name"])) : ?>
-          <span class="text-sm text-red-500"><?= $errors["name"]  ?></span>
+          <span class="text-sm text-red-500"><?= $errors["name"] ?></span>
         <?php endif ?>
       </span>
 
@@ -29,7 +30,7 @@
         <label for="email" class="text-sm text-slate-500">Email:</label>
         <input class="border border-slate-300 rounded-md p-2" type="email" name="email" id="email" required>
         <?php if (isset($errors["email"])) : ?>
-          <span class="text-sm text-red-500"><?= $errors["email"]  ?></span>
+          <span class="text-sm text-red-500"><?= $errors["email"] ?></span>
         <?php endif ?>
       </span>
 
@@ -38,14 +39,14 @@
         <label for="password" class="text-sm text-slate-500">Password:</label>
         <input class="border border-slate-300 rounded-md p-2" type="password" name="password" id="password" required>
         <?php if (isset($errors["password"])) : ?>
-          <span class="text-sm text-red-500"><?= $errors["password"]  ?></span>
+          <span class="text-sm text-red-500"><?= $errors["password"] ?></span>
         <?php endif ?>
       </span>
       <span class="flex flex-col items-start">
         <label for="confirm" class="text-sm text-slate-500">Confirm Password:</label>
         <input class="border border-slate-300 rounded-md p-2" type="password" name="confirm" id="confirm" required>
         <?php if (isset($errors["confirm"])) : ?>
-          <span class="text-sm text-red-500"><?= $errors["confirm"]  ?></span>
+          <span class="text-sm text-red-500"><?= $errors["confirm"] ?></span>
         <?php endif ?>
       </span>
 
