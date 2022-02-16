@@ -1,43 +1,20 @@
 <?php
-require_once "db_conn.php";
 require_once "services/users.service.php";
 
-$name = $email = "";
 if (isset($_COOKIE['user'])) {
     $user = getUser( $_COOKIE['user']);
     if(is_null($user)){
         header("Location: login.php");
+    } else {
+        include_once "views/index.view.php";
     }
 } else {
   header("Location: login.php");
 }
-?>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
 
-<body class="flex items-center justify-center min-h-screen">
-  <div class="rounded-xl shadow p-4 px-8 flex flex-col items-center">
-    <h1 class="text-3xl font-bold"><?= $user["name"] ?></h1>
-    <h1 class="text-3xl font-bold"><?= $user["email"] ?></h1>
-    <form method="post">
-      <input type="submit" name="logout" id="logout" value="Logout" class="py-3 bg-blue-300 px-8 cursor-pointer" />
-    </form>
-
-  </div>
-</body>
-
-<?php
-#logout function
-function logout()
-{
-  setcookie("user", "", time() - 3600); #removing cookie
-  header("Location: login.php");
-}
 
 if (array_key_exists('logout', $_POST)) {
-  logout();
+    logoutUser();
+    header("Location: login.php");
 }
