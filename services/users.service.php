@@ -1,5 +1,5 @@
 <?php
-require_once "db_conn.php";
+require_once "utils/db_conn.php";
 
 /**
  * checks if email already exists in the database
@@ -60,4 +60,29 @@ function getUser($encoded_user) {
     }
     closeConnection($conn);
     return $user;
+}
+
+function checkUser($email,$password) {
+    $conn = getConnection();
+    $query = "SELECT * FROM USERS WHERE email='$email'";
+
+    $result = mysqli_query($conn, $query);
+    if ($result->num_rows > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            if (password_verify($password, $row["password"])) {
+                setcookie("user", base64_encode($email . '|' . $password), time() + (86400 * 30), "/");
+                return TRUE;
+            }
+        }
+    }
+    closeConnection($conn);
+    return FALSE;
+}
+
+/**
+ * removes cookie from browser and redirects user
+ */
+function logoutUser()
+{
+    setcookie("user", "", time() - 3600); #removing cookie
 }
