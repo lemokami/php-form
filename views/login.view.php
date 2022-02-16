@@ -1,41 +1,45 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- bootstrap links  -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <title>Login</title>
 </head>
 
-<body class="flex items-center justify-center min-h-screen">
-<div class="rounded-xl shadow p-4  flex flex-col items-center">
-    <h1 class="text-3xl font-bold">Login</h1>
+<body>
+  <div class="container p-4">
+    <h1 class="display-2">Login</h1>
     <?php if (isset($errors["message"])) : ?>
-        <span class="bg-yellow-300 border border-yellow-400 py-3 px-2 w-full bg-opacity-50 rounded-md text-yellow-900 my-2">
+      <div class="alert alert-danger" role="alert">
         <?= $errors["message"] ?>
-      </span>
+      </div>
     <?php endif ?>
 
-    <form method="post" class="space-y-2">
-      <span class="flex flex-col items-start">
-        <label for="email" class="text-sm text-slate-500">Email:</label>
-        <input class="border border-slate-300 rounded-md p-2" type="email" name="email" id="email" required>
-          <?php if (isset($errors["email"])) : ?>
-              <span class="text-sm text-red-500"><?= $errors["email"] ?></span>
-          <?php endif ?>
-      </span>
+    <form method="post" class="v-stack" novalidate>
+      <div>
+        <label for="email" class="form-label">Email:</label>
+        <input class="form-control" type="email" name="email" id="email" required>
+        <?php if (isset($errors["email"])) : ?>
+          <span class="text-danger fs-6"><?= $errors["email"] ?></span>
+        <?php endif ?>
+      </div>
 
-        <span class="flex flex-col items-start">
-        <label for="password" class="text-sm text-slate-500">Password:</label>
-        <input class="border border-slate-300 rounded-md p-2" type="password" name="password" id="password" required>
-            <?php if (isset($errors["password"])) : ?>
-                <span class="text-sm text-red-500"><?= $errors["password"] ?></span>
-            <?php endif ?>
-      </span>
-        <button class="rounded-md p-2 px-8 font-bold text-white bg-blue-500 w-full" name="submit">Submit</button>
+      <div>
+        <label for="password" class="form-label">Password:</label>
+        <input class="form-control" type="password" name="password" id="password" required>
+        <?php if (isset($errors["password"])) : ?>
+          <span class="text-danger fs-6"><?= $errors["password"] ?></span>
+        <?php endif ?>
+      </div>
+      <button class="btn btn-primary w-100 my-2" name="submit">Submit</button>
+      <span>Don't have an account? <a href="/signup.php">Signup</a></span>
     </form>
-    <span class="text-sm text-center">Don't have an account? <a href="/signup.php" class="text-blue-800 underline">Signup</a></span>
 
-</div>
+  </div>
 </body>
+
 </html>
