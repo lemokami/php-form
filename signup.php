@@ -31,7 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   #creating a user
   if (!empty($name) && !empty($email) && !empty($password)  && empty($confirmErr)) {
-    $query = "INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$password')";
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $query = "INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$hashed_password')";
     $result = mysqli_query($conn, $query);
     if ($result) {
       $message = "User created successfully";
