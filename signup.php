@@ -24,6 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($_POST["password"])) {
         $errors['password'] = "Password is required";
+    } else if (strlen($_POST["password"]) < 8) {
+        $errors['password'] = "Password should have atleast 8 characters";
     } else if ($_POST["password"] != $_POST["confirm"]) {
         $errors['confirm'] = "Passwords do not match";
     } else {
