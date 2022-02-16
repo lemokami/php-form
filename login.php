@@ -8,6 +8,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($_POST["email"])) {
         $errors["email"] = "Email is required";
+    } else if (!isValidEmail($_POST["email"])) {
+        $errors["email"] = "Email is not valid";
     } else {
         $email = sanitize($_POST["email"]);
     }
@@ -19,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (!empty($email) && !empty($password)) {
-        if(checkUser($email,$password)) {
+        if (checkUser($email, $password)) {
             header("Location: index.php");
         } else {
             $errors["message"] = "Invalid Credentials";
@@ -29,5 +31,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else if ($_SERVER["REQUEST_METHOD"] == "GET") {
     include_once "views/login.view.php";
 }
-
-

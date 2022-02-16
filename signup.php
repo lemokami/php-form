@@ -8,6 +8,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($_POST["name"])) {
         $errors['name'] = "Name is required";
+    } else if (!isValidEmail($_POST["email"])) {
+        $errors["email"] = "Email is not valid";
     } else {
         $name = sanitize($_POST["name"]);
     }
