@@ -1,7 +1,9 @@
 <?php
 
-
-// Create connection
+/**
+ * Create connection with the database
+ * @return mysqli|void
+ */
 function getConnection()
 {
     $servername = "localhost";
@@ -15,6 +17,10 @@ function getConnection()
     return $conn;
 }
 
+/**
+ * closes the connection with the database
+ * @param $conn mysqli connection variable
+ */
 function closeConnection($conn)
 {
     $conn->close();
